@@ -23,6 +23,7 @@ map("n", "<leader>rn", "<cmd>set rnu!<CR>", { desc = "Toggle relative number" })
 local term = require "nvchad.term"
 
 map("t", "<C-x>", "<C-\\><C-N>", { desc = "Term escape terminal mode" })
+map("t", "<A-x>", "<C-\\><C-n>:q<CR>",{ desc = "Term close" })
 
 map({ "n", "t" }, "<A-v>", function()
   term.toggle { pos = "vsp", id = "vtoggleTerm" }
@@ -39,3 +40,13 @@ map({ "n", "t" }, "<C-A-l>", function()
     cmd = "cd " .. vim.fn.expand "%:p:h",
   }
 end, { desc = "Term toggle horizontal split in buffer location" })
+
+map({ "n", "t" }, "<A-r>", function()
+  require("nvchad.term").runner {
+    id = "py_runner",
+    pos = "float",
+    cmd = "python " .. vim.fn.expand("%"),
+    clear_cmd = false,
+  }
+end, { desc = "Run current Python file in vertical split terminal" })
+

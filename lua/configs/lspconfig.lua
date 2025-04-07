@@ -4,7 +4,7 @@ require("nvchad.configs.lspconfig").defaults()
 local lspconfig = require "lspconfig"
 
 -- EXAMPLE
-local servers = { "html", "cssls", "ruff", "pyright", "texlab"}
+local servers = { "html", "cssls", "ruff", "pyright", "texlab", "ccls"}
 local nvlsp = require "nvchad.configs.lspconfig"
 
 require('lspconfig').ruff.setup({
@@ -31,6 +31,14 @@ require('lspconfig').pyright.setup {
       },
     },
   },
+}
+
+lspconfig.ccls.setup {
+  init_options = {
+    cache = {
+      directory = ".ccls-cache";
+    };
+  }
 }
 
 -- lsps with default config

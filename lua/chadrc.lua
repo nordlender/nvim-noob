@@ -42,7 +42,6 @@ M.colorify = {
 
 M.lsp = {
   signature = true,
-  
 }
 
 M.term = {

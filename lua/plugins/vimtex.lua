@@ -4,10 +4,10 @@ return {
   -- tag = "v2.15", -- uncomment to pin to a specific release
   init = function()
     -- VimTeX configuration goes here, e.g.
-    vim.g.vimtex_view_general_viewer = 'evince'
+    -- vim.g.vimtex_view_general_viewer = 'evince'
+    vim.g.vimtex_view_method = "zathura"
     vim.opt.conceallevel = 2
     vim.g.tex_conceal = "abdmg"
-    
   end
   },
   {
@@ -33,12 +33,21 @@ return {
 
       local ls = require("luasnip")
       local utils = require("luasnip-latex-snippets.util.utils")
-      local is_math = utils.is_math() -- pass true if using Treesitter
+      -- local is_math = utils.is_math -- pass true if using Treesitter
+      
+      -- to prevent vimtex#syntax#in_mathzone not found
+      local safe_is_math = function()
+        if vim.fn.exists("vimtex#syntax#in_mathzone") then
+          return utils.is_math
+        else
+          return 0
+        end
+      end
 
       -- set a higher priority (defaults to 0 for most snippets)
       local snippets = {
-        { trig = "bf", name = "mathbf", condition = is_math, priority = 10, body = "\\mathbf{$1}$0" },
-        { trig = "ptl", name = "partial", condition = is_math, priority = 10, body = "\\partial " },
+        { trig = "bf", name = "mathbf", condition = safe_is_math()(), priority = 10, body = "\\mathbf{$1}$0" },
+        { trig = "ptl", name = "partial", condition = safe_is_math()(), priority = 10, body = "\\partial " },
       }
 
       local parsed_snippets = {}

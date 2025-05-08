@@ -2,10 +2,28 @@ return {
   {"lervag/vimtex",
   ft = "tex", -- Lazy load on filetype tex 
   -- tag = "v2.15", -- uncomment to pin to a specific release
+
   init = function()
+    -- set nightmode in zathura
+    local is_day = function()
+      local hour = tonumber(vim.fn.strftime("%H", vim.fn.localtime()))
+      if hour >= 6 and hour < 18 then
+        return true
+      else
+        return false
+      end
+    end
+        local zathura_config_path
+    if is_day() then
+      zathura_config_path = "~/.config/zathura/day"
+    else
+      zathura_config_path = "~/.config/zathura/night"
+    end
+
     -- VimTeX configuration goes here, e.g.
     -- vim.g.vimtex_view_general_viewer = 'evince'
     vim.g.vimtex_view_method = "zathura"
+    vim.g.vimtex_view_zathura_options = "-c " .. zathura_config_path
     vim.opt.conceallevel = 2
     vim.g.tex_conceal = "abdmg"
   end

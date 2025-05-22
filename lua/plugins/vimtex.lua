@@ -31,17 +31,11 @@ return {
   end
   },
   {
-    "L3MON4D3/LuaSnip",
-    -- follow latest release.
-    version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-    -- install jsregexp (optional!).
-    build = "make install_jsregexp"
-  },
-  {
     "iurimateus/luasnip-latex-snippets.nvim",
     -- vimtex isn't required if using treesitter
     ft = "tex",
     requires = { "L3MON4D3/LuaSnip", "lervag/vimtex" },
+
     config = function()
       require'luasnip-latex-snippets'.setup({
         use_treesitter = false,
@@ -52,34 +46,27 @@ return {
       }
 
       local ls = require("luasnip")
-      local utils = require("luasnip-latex-snippets.util.utils")
-      -- local is_math = utils.is_math -- pass true if using Treesitter
       
-      -- to prevent vimtex#syntax#in_mathzone not found
-      local safe_is_math = function()
-        if vim.fn.exists("vimtex#syntax#in_mathzone") then
-          return utils.is_math
-        else
-          return 0
-        end
-      end
-
       -- set a higher priority (defaults to 0 for most snippets)
-      local snippets = {
-        { trig = "bf", name = "mathbf", condition = safe_is_math()(), priority = 10, body = "\\mathbf{$1}$0" },
-        { trig = "ptl", name = "partial", condition = safe_is_math()(), priority = 10, body = "\\partial " },
-      }
+      local snippets = require "snippets.tex"
+      local parsed_snippets = {auto={}, standard={}}
 
-      local parsed_snippets = {}
-
-      for _, snip in ipairs(snippets) do
-        table.insert(parsed_snippets, ls.parser.parse_snippet(
+      -- parse snippets
+      for _, snip in ipairs(snippets.auto) do
+        table.insert(parsed_snippets.auto, ls.parser.parse_snippet(
+          { trig = snip.trig, name = snip.name, condition = snip.condition, priority = snip.priority },
+          snip.body
+        ))
+      end
+      for _, snip in ipairs(snippets.standard) do
+        table.insert(parsed_snippets.standard, ls.parser.parse_snippet(
           { trig = snip.trig, name = snip.name, condition = snip.condition, priority = snip.priority },
           snip.body
         ))
       end
 
-      ls.add_snippets("tex", parsed_snippets, { type = "autosnippets" })
-          end,
-        },
+      ls.add_snippets("tex", parsed_snippets.auto, { type = "autosnippets" })
+      ls.add_snippets("tex", parsed_snippets.standard)
+    end,
+  },
 }

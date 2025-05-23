@@ -47,7 +47,7 @@ return {
       }
 
       local ls = require("luasnip")
-      
+
       -- set a higher priority (defaults to 0 for most snippets)
       local snippets = require "snippets.tex"
       local parsed_snippets = {auto={}, standard={}}

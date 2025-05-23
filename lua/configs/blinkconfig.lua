@@ -21,7 +21,9 @@ return {
       },
 
       -- Don't select by default, auto insert on selection
-      list = { selection = { preselect = false, auto_insert = true } },
+      list = { selection =
+        { preselect = false, auto_insert = true }
+      },
       ghost_text = { enabled = true },
       documentation = {
         auto_show = true,

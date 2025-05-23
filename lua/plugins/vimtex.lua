@@ -52,12 +52,14 @@ return {
       local snippets = require "snippets.tex"
 
       -- parse snippets
-      for type, snip in ipairs(snippets) do
+      for type, sniplist in pairs(snippets) do
         local parsed_snippets = {}
-        table.insert(parsed_snippets, ls.parser.parse_snippet(
-          { trig = snip.trig, name = snip.name, condition = snip.condition, priority = snip.priority },
-          snip.body
-        ))
+        for snip in vim.iter(sniplist) do
+          table.insert(parsed_snippets, ls.parser.parse_snippet(
+            { trig = snip.trig, name = snip.name, condition = snip.condition, priority = snip.priority },
+            snip.body
+          ))
+        end
         ls.add_snippets("tex", parsed_snippets, { type = type })
       end
     end,

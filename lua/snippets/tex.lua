@@ -5,10 +5,9 @@ end
 
 -- set a higher priority (defaults to 0 for most snippets)
 local snippets = {
-  ft = "tex",
-  standard = {
+  snippets = {
   },
-  auto = {
+  autosnippets = {
       { trig = "bf", name = "mathbf", condition = in_mathzone(), priority = 10, body = "\\mathbf{$1}$0" },
       { trig = "ptl", name = "partial", condition = in_mathzone(), priority = 10, body = "\\partial " },
   }

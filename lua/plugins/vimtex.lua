@@ -50,24 +50,16 @@ return {
 
       -- set a higher priority (defaults to 0 for most snippets)
       local snippets = require "snippets.tex"
-      local parsed_snippets = {auto={}, standard={}}
 
       -- parse snippets
-      for _, snip in ipairs(snippets.auto) do
-        table.insert(parsed_snippets.auto, ls.parser.parse_snippet(
+      for type, snip in ipairs(snippets) do
+        local parsed_snippets = {}
+        table.insert(parsed_snippets, ls.parser.parse_snippet(
           { trig = snip.trig, name = snip.name, condition = snip.condition, priority = snip.priority },
           snip.body
         ))
+        ls.add_snippets("tex", parsed_snippets, { type = type })
       end
-      for _, snip in ipairs(snippets.standard) do
-        table.insert(parsed_snippets.standard, ls.parser.parse_snippet(
-          { trig = snip.trig, name = snip.name, condition = snip.condition, priority = snip.priority },
-          snip.body
-        ))
-      end
-
-      ls.add_snippets("tex", parsed_snippets.auto, { type = "autosnippets" })
-      ls.add_snippets("tex", parsed_snippets.standard)
     end,
   },
 }

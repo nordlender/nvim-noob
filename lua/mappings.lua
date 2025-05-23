@@ -65,23 +65,30 @@ end, { desc = "Open nvim config folder" })
 
 -- Luasnip
 local ls = require("luasnip")
-map({ "i", "s" }, "<C-J>", function() ls.jump(1) end, { silent = true })
-map({ "i", "s" }, "<C-K>", function() ls.jump(-1) end, { silent = true })
+map({ "i", "s" }, "<Tab>", function() ls.jump(1) end, { silent = true })
+map({ "i", "s" }, "<S-Tab>", function() ls.jump(-1) end, { silent = true })
 
+map({ 'i', 's' }, '<Tab>', function()
+  if vim.snippet.active { direction = 1 } then
+    return "<Cmd>lua vim.snippet.jump(1)<CR>"
+  else
+    return "<Tab>"
+  end
+end, { desc = '...', expr = true, silent = true })
 
 -- Disable Arrows
-vim.keymap.set('n', '<Left>', ':echo "No left for you!"<CR>', { noremap = true, silent = true })
-vim.keymap.set('v', '<Left>', ':<C-u>echo "No left for you!"<CR>', { noremap = true, silent = true })
-vim.keymap.set('i', '<Left>', '<C-o>:echo "No left for you!"<CR>', { noremap = true, silent = true })
+map('n', '<Left>', ':echo "No left for you!"<CR>', { noremap = true, silent = true })
+map('v', '<Left>', ':<C-u>echo "No left for you!"<CR>', { noremap = true, silent = true })
+map('i', '<Left>', '<C-o>:echo "No left for you!"<CR>', { noremap = true, silent = true })
 
-vim.keymap.set('n', '<Right>', ':echo "No right for you!"<CR>', { noremap = true, silent = true })
-vim.keymap.set('v', '<Right>', ':<C-u>echo "No right for you!"<CR>', { noremap = true, silent = true })
-vim.keymap.set('i', '<Right>', '<C-o>:echo "No right for you!"<CR>', { noremap = true, silent = true })
+map('n', '<Right>', ':echo "No right for you!"<CR>', { noremap = true, silent = true })
+map('v', '<Right>', ':<C-u>echo "No right for you!"<CR>', { noremap = true, silent = true })
+map('i', '<Right>', '<C-o>:echo "No right for you!"<CR>', { noremap = true, silent = true })
 
-vim.keymap.set('n', '<Up>', ':echo "No up for you!"<CR>', { noremap = true, silent = true })
-vim.keymap.set('v', '<Up>', ':<C-u>echo "No up for you!"<CR>', { noremap = true, silent = true })
-vim.keymap.set('i', '<Up>', '<C-o>:echo "No up for you!"<CR>', { noremap = true, silent = true })
+map('n', '<Up>', ':echo "No up for you!"<CR>', { noremap = true, silent = true })
+map('v', '<Up>', ':<C-u>echo "No up for you!"<CR>', { noremap = true, silent = true })
+map('i', '<Up>', '<C-o>:echo "No up for you!"<CR>', { noremap = true, silent = true })
 
-vim.keymap.set('n', '<Down>', ':echo "No down for you!"<CR>', { noremap = true, silent = true })
-vim.keymap.set('v', '<Down>', ':<C-u>echo "No down for you!"<CR>', { noremap = true, silent = true })
-vim.keymap.set('i', '<Down>', '<C-o>:echo "No down for you!"<CR>', { noremap = true, silent = true })
+map('n', '<Down>', ':echo "No down for you!"<CR>', { noremap = true, silent = true })
+map('v', '<Down>', ':<C-u>echo "No down for you!"<CR>', { noremap = true, silent = true })
+map('i', '<Down>', '<C-o>:echo "No down for you!"<CR>', { noremap = true, silent = true })

@@ -29,6 +29,12 @@ return {
       vim.g.vimtex_view_zathura_options = "-c " .. zathura_config_dir
       vim.opt.conceallevel = 2
       vim.g.tex_conceal = "abdmg"
+      vim.o.linebreak = true
+
+      -- Mappings
+      local map = vim.keymap.set
+      map("n", "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
+      map("n", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
     end
   },
   {
@@ -46,9 +52,8 @@ return {
         enable_autosnippets = true,
       }
 
+      -- Snippets
       local ls = require("luasnip")
-
-      -- set a higher priority (defaults to 0 for most snippets)
       local snippets = require "snippets.tex"
 
       -- parse snippets

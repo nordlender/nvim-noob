@@ -3,6 +3,7 @@ require "nvchad.mappings"
 -- add yours here
 
 local map = vim.keymap.set
+local del = vim.keymap.del
 
 --map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>", { desc = "Escape insert mode" })
@@ -15,9 +16,23 @@ map("i", "jk", "<ESC>", { desc = "Escape insert mode" })
 --map("n", "<Up>", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
 --map("n", "<Down>", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
 
+
 -- Toggles
 map("n", "<leader>n", "<cmd>set nu!<CR>", { desc = "Toggle line number" })
 map("n", "<leader>rn", "<cmd>set rnu!<CR>", { desc = "Toggle relative number" })
+
+
+-- Windows
+map("n", "<C-L>", "<C-W>w", { desc = "Cycle windows" })
+del("n", "<C-J>")
+del("n", "<C-K>")
+
+
+-- Viewing/screen/scroll
+map("n", "<C-J>", "<C-D>")
+map("n", "<C-K>", "<C-U>")
+map("n", "<C-C>", "z.", { desc = "Center window at cursor"})
+
 
 -- term
 local term = require "nvchad.term"
@@ -55,26 +70,16 @@ map({ "n", "t" }, "<A-r>", function()
   }
 end, { desc = "Run current Python file in vertical split terminal" })
 
+
 -- open config
-map("n", "<leader>nv", function()
+map("n", "<leader>cf", function()
   local api = require("nvim-tree.api")
   vim.cmd("cd ~/.config/nvim")           -- change working directory
   api.tree.open()
   api.tree.change_root("~/.config/nvim") -- change tree root
-end, { desc = "Open nvim config folder" })
+  api.tree.expand_all()
+end, { desc = "Configure nvim" })
 
--- Luasnip
-local ls = require("luasnip")
-map({ "i", "s" }, "<Tab>", function() ls.jump(1) end, { silent = true })
-map({ "i", "s" }, "<S-Tab>", function() ls.jump(-1) end, { silent = true })
-
-map({ 'i', 's' }, '<Tab>', function()
-  if vim.snippet.active { direction = 1 } then
-    return "<Cmd>lua vim.snippet.jump(1)<CR>"
-  else
-    return "<Tab>"
-  end
-end, { desc = '...', expr = true, silent = true })
 
 -- Disable Arrows
 map('n', '<Left>', ':echo "No left for you!"<CR>', { noremap = true, silent = true })

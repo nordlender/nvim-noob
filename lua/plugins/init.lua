@@ -14,24 +14,50 @@ return {
   },
 
   {
+    "L3MON4D3/LuaSnip",
+    -- follow latest release.
+    version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+    -- install jsregexp (optional!).
+    build = "make install_jsregexp"
+  },
+
+  {
     'saghen/blink.cmp',
     version = '1.*',
     -- `main` is untested, please open a PR if you've confirmed it works as expected
     dependencies = { 'L3MON4D3/LuaSnip', version = 'v2.*' },
-    opts = function ()
-      return require('configs.blinkconfig').opts
-    end,
-    keymap = function()
-      return require('configs.blinkconfig').keymap
+    opts = require('configs.blink'),
+  },
+
+  {
+  	"nvim-treesitter/nvim-treesitter",
+  	opts = {
+  		ensure_installed = {
+  			"vim", "lua", "vimdoc",
+       "html", "css"
+  		},
+      ignore_install = {
+        "latex",
+      }
+  	},
+    lazy = false,
+  },
+
+  {
+    "nvim-tree/nvim-tree.lua",
+    cmd = { "NvimTreeToggle", "NvimTreeFocus" },
+    opts = function()
+      return require "configs.nvimtree"
     end,
   },
-  -- {
-  -- 	"nvim-treesitter/nvim-treesitter",
-  -- 	opts = {
-  -- 		ensure_installed = {
-  -- 			"vim", "lua", "vimdoc",
-  --      "html", "css"
-  -- 		},
-  -- 	},
-  -- },
+
+  {
+    "RRethy/vim-illuminate",
+    event = "VeryLazy",
+    config = function()
+      require('illuminate').configure(
+        require('configs.illuminateconfig')
+      )
+    end,
+  },
 }

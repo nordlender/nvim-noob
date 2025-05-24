@@ -77,7 +77,7 @@ map("n", "<leader>cf", function()
   vim.cmd("cd ~/.config/nvim")           -- change working directory
   api.tree.open()
   api.tree.change_root("~/.config/nvim") -- change tree root
-  api.tree.expand_all()
+  --api.tree.expand_all("lua")
 end, { desc = "Configure nvim" })
 
 

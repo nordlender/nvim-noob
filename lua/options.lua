@@ -109,7 +109,7 @@ autocmd({ "WinNew" }, {
 
     -- print("new", id, color)
     -- for k, v in pairs(vim.g.idmap) do print(k, v) end
-    for k, v in pairs(vim.g.stcolormap) do print(k, v) end
+    -- for k, v in pairs(vim.g.stcolormap) do print(k, v) end
   end
 })
 

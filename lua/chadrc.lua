@@ -7,45 +7,60 @@ local M = {}
 
 M.base46 = {
   theme = "flexoki",
-  
+  -- bearded-arc solarized_osaka flexoki everblush 
+  -- gatekeeper hiberbee rosepine tokyodark
+  theme_toggle = { "flexoki", "rxyhn" },
+
   hl_override = {
     Comment = { italic = true },
-    ["@comment"] = { italic = true },
+    ["@comment"] = { italic = true, fg = "black2" },
     -- ["@constructor"] = { fg = "#27e86b"},
+    -- ["@punctuation.bracket"] = { fg = "light_grey" },
+    -- ["@property"]    = { fg = "#9b372e" },
+    -- ["@variable"]    = { fg = { "light_grey", 17 } },
+    -- ["@keyword"]     = { link = "string" },
+    -- ["@string"]      = { fg = "green"},
+    -- ["@operator"]    = { fg = { "light_grey" }},
+    -- Special          = { fg = "#111111" },
+    -- Repeat           = { fg = { "#8b39ba" }},
+
+    -- solarized_osaka
+    -- ["@keyword"]     = { link = "string" },
+    -- ["@string"]      = { link = "keyword" },
+
+    -- Flexoki
     ["@punctuation.bracket"] = { fg = "light_grey" },
     ["@property"] = { fg = "#9b372e" },
     ["@variable"] = { fg = { "light_grey", 17 } },
-    -- Special = { fg = "#111111" },
-  },
-  hl_add = {
-    Win0 =     { fg = "black", bg = "#ff797c" }, -- #8b39ba
-    Win1 =     { fg = "black", bg = "#ffd35f" },
-    Win2 =     { fg = "black", bg = "#a1d34e" },
-    Win3 =     { fg = "black", bg = "#469acf" },
-    Win4 =     { fg = "black", bg = "#876da8" },
-    Win5 =     { fg = "black", bg = "#6da97e" },
-    Win6 =     { fg = "black", bg = "#42d4f4" },
-    Win7 =     { fg = "black", bg = "#e282c8" },
-    Win0sep =  { fg = "#ff797c", bg = "black"  }, -- #8b39ba
-    Win1sep =  { fg = "#ffd35f", bg = "black"  }, --
-    Win2sep =  { fg = "#a1d34e", bg = "black"  },
-    Win3sep =  { fg = "#469acf", bg = "black"  },
-    Win4sep =  { fg = "#876da8", bg = "black"  },
-    Win5sep =  { fg = "#6da97e", bg = "black"  },
-    Win6sep =  { fg = "#42d4f4", bg = "black"  },
-    Win7sep =  { fg = "#e282c8", bg = "black"  },
-    Win0txt =  { fg = "#ff797c", bg = "#292626"  }, -- #8b39ba
-    Win1txt =  { fg = "#ffd35f", bg = "#292626"  }, --
-    Win2txt =  { fg = "#a1d34e", bg = "#292626"  },
-    Win3txt =  { fg = "#469acf", bg = "#292626"  },
-    Win4txt =  { fg = "#876da8", bg = "#292626"  },
-    Win5txt =  { fg = "#6da97e", bg = "#292626"  },
-    Win6txt =  { fg = "#42d4f4", bg = "#292626"  },
-    Win7txt =  { fg = "#e282c8", bg = "#292626"  },
 
   },
-  -- "bearded-arc" solarized_osaka flexoki everblush
-  theme_toggle = { "flexoki", "rxyhn" },
+  hl_add = {
+    Win0 =     { fg = "statusline_bg", bg = "#ff797c" }, -- #8b39ba
+    Win1 =     { fg = "statusline_bg", bg = "#ffd35f" },
+    Win2 =     { fg = "statusline_bg", bg = "#a1d34e" },
+    Win3 =     { fg = "statusline_bg", bg = "#469acf" },
+    Win4 =     { fg = "statusline_bg", bg = "#876da8" },
+    Win5 =     { fg = "statusline_bg", bg = "#6da97e" },
+    Win6 =     { fg = "statusline_bg", bg = "#42d4f4" },
+    Win7 =     { fg = "statusline_bg", bg = "#e282c8" },
+    Win0sep =  { fg = "#ff797c", bg = "statusline_bg"  }, -- #8b39ba
+    Win1sep =  { fg = "#ffd35f", bg = "statusline_bg"  }, --
+    Win2sep =  { fg = "#a1d34e", bg = "statusline_bg"  },
+    Win3sep =  { fg = "#469acf", bg = "statusline_bg"  },
+    Win4sep =  { fg = "#876da8", bg = "statusline_bg"  },
+    Win5sep =  { fg = "#6da97e", bg = "statusline_bg"  },
+    Win6sep =  { fg = "#42d4f4", bg = "statusline_bg"  },
+    Win7sep =  { fg = "#e282c8", bg = "statusline_bg"  },
+    Win0txt =  { fg = "#ff797c", bg = "one_bg" }, -- #8b39ba
+    Win1txt =  { fg = "#ffd35f", bg = "one_bg" }, --
+    Win2txt =  { fg = "#a1d34e", bg = "one_bg" },
+    Win3txt =  { fg = "#469acf", bg = "one_bg" },
+    Win4txt =  { fg = "#876da8", bg = "one_bg" },
+    Win5txt =  { fg = "#6da97e", bg = "one_bg" },
+    Win6txt =  { fg = "#42d4f4", bg = "one_bg" },
+    Win7txt =  { fg = "#e282c8", bg = "one_bg" },
+
+  },
 }
 
 M.nvdash = { load_on_startup = true }

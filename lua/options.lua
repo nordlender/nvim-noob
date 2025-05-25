@@ -17,9 +17,10 @@ vim.g.stcolormap = {
 
 -- Set highlight group, link to 'Winx' color
 local set_sep_highlight = function(color)
-  vim.api.nvim_set_hl(0, "St_file_bg", { link = color, force = true})
-  vim.api.nvim_set_hl(0, "St_file_txt", { link = color .. "txt", force = true })
-  vim.api.nvim_set_hl(0, "St_file_sep", { link = color .. "sep", force = true })
+  local set_hl = vim.api.nvim_set_hl
+  set_hl(0, "St_file_bg", { link = color, force = true})
+  set_hl(0, "St_file_txt", { link = color .. "txt", force = true })
+  set_hl(0, "St_file_sep", { link = color .. "sep", force = true })
 end
 
 -- 
@@ -49,18 +50,21 @@ local test_get_color = function()
   }
   local dmax = 0
   local color = 0
+  local u, l = 0, 0
+
   for i=1, 1000 do
     color = get_color(map)
     map[color] = map[color] + 1
 
-    local u = -50
-    local l = math.huge
+    u = -50
+    l = math.huge
     for _, v in pairs(map) do
       l = math.min(l, v)
       u = math.max(l, v)
     end
     dmax = math.max(dmax, u-l)
   end
+
   assert(dmax < 2, "WindowSTLine test function failed")
   for k, v in pairs(map) do
     print(k, v)
@@ -114,7 +118,7 @@ autocmd({ "WinNew" }, {
 })
 
 -- Set color when entering window
-autocmd({ "WinEnter" }, {
+autocmd({ "WinEnter", "FileWritePost" }, {
   group = vim.api.nvim_create_augroup("WindowSTLine", { clear = false }),
   callback = function(args)
     local id = check_win()

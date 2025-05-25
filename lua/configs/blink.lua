@@ -50,8 +50,8 @@ return {
   keymap = {
     preset = "none",
     ['<C-g>'] = { 'hide' },
-    ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback'},
-    ['<S-Tab>'] = { 'accept', 'fallback'},
+    ['<Tab>'] = { 'accept', 'snippet_forward', 'fallback'},
+    ['<S-Tab>'] = { 'select_next', 'fallback'},
 
     ['<Up>'] = { 'select_prev', 'fallback' },
     ['<Down>'] = { 'select_next', 'fallback' },

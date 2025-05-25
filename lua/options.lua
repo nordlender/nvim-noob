@@ -61,6 +61,7 @@ local test_get_color = function()
     end
     dmax = math.max(dmax, u-l)
   end
+  assert(dmax < 2, "WindowSTLine test function failed")
   for k, v in pairs(map) do
     print(k, v)
   end
@@ -106,7 +107,7 @@ autocmd({ "WinNew" }, {
     update_colormap(color, 1)
     vim.api.nvim_win_set_var(id, 'stcolor', color)
 
-    print("new", id, color)
+    -- print("new", id, color)
     -- for k, v in pairs(vim.g.idmap) do print(k, v) end
     for k, v in pairs(vim.g.stcolormap) do print(k, v) end
   end
@@ -122,7 +123,7 @@ autocmd({ "WinEnter" }, {
     local color = vim.api.nvim_win_get_var(id, 'stcolor')
 
     -- Set
-    print("set", id, color)
+    -- print("set", id, color)
     set_sep_highlight(color)
   end,
 })
@@ -137,7 +138,7 @@ autocmd({ "WinClosed" }, {
     local color = vim.api.nvim_win_get_var(id, 'stcolor')
     update_colormap(color, -1)
 
-    print("rem", id, color)
+    -- print("rem", id, color)
   end
 })
 

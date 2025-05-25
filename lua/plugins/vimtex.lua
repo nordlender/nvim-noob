@@ -5,7 +5,9 @@ return {
     -- tag = "v2.15", -- uncomment to pin to a specific release
 
     init = function()
-      -- used to change config after dark
+      -- ANTI EYE DAMAGE ALGORITHM
+      -- very human design
+      -- used to change config after dark, 
       local is_day = function()
         local hour = tonumber(vim.fn.strftime("%H", vim.fn.localtime()))
         if hour >= 6 and hour < 18 then

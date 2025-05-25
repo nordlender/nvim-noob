@@ -8,94 +8,137 @@ o.cursorlineopt ='both' -- to enable cursorline!
 require "nvchad.autocmds"
 local autocmd = vim.api.nvim_create_autocmd
 
--- autocmd({ "WinEnter", "WinLeave" }, {
---   group = vim.api.nvim_create_augroup("ActiveWindowBorder", { clear = true }),
---   callback = function(args)
---     local border = (args.event == "WinEnter" and 'solid' or 'none')
---     local wincfg = vim.api.nvim_win_get_config(0)
---     if (wincfg.relative or 0) then return end
---
---     wincfg.border = border
---     vim.api.nvim_win_set_config(0, wincfg)
---   end,
--- })
 
--- autocmd({ "WinEnter", "WinLeave" }, {
---   group = vim.api.nvim_create_augroup("ActiveWindowBorder", { clear = true }),
---   callback = function(args)
---     local border = function(event)
---       local ret = {'none'}
---       if event == "WinEnter" then
---         ret = { "╔", "═" ,"╗", "║", "╝", "═", "╚", "║" }
---       end
---       return ret 
---     end
---     local wincfg = vim.api.nvim_win_get_config(0)
---     if (wincfg.relative or 0) then return end
+-- Statusline color changer
 --
---     wincfg.border = border(args.event)
---     vim.api.nvim_win_set_config(0, wincfg)
---   end,
--- })
---
---  "Win0", "Win1", "Win2", "Win3", "Win4", "Win5", "Win6", "Win7"
-
 vim.g.stcolormap = {
-  Win0 = 1, Win1 = 0, Win2 = 0, Win3 = 0, Win4 = 0, Win5 = 0, Win6 = 0, Win7 = 0
+  Win0 = 0, Win1 = 0, Win2 = 0, Win3 = 0, Win4 = 0, Win5 = 0, Win6 = 0, Win7 = 0
 }
 
-autocmd({ "VimEnter" }, {
-  group = vim.api.nvim_create_augroup("WindowSTLine", { clear = true }),
-  command = "let w:stcolor='Win0'"
-})
+-- Set highlight group, link to 'Winx' color
+local set_sep_highlight = function(color)
+  vim.api.nvim_set_hl(0, "St_file_bg", { link = color, force = true})
+  vim.api.nvim_set_hl(0, "St_file_txt", { link = color .. "txt", force = true })
+  vim.api.nvim_set_hl(0, "St_file_sep", { link = color .. "sep", force = true })
+end
 
-local mapcolor = function(id, color)
-  vim.api.nvim_win_set_var(id, 'stcolor', color)
+-- 
+local update_colormap = function(color, addend)
   local tbl = vim.api.nvim_get_var('stcolormap')
-
-  -- Lua what the fuck why
-  local newval = tbl[color] + 1
+  local newval = tbl[color] + addend
   tbl[color] = newval
   vim.api.nvim_set_var('stcolormap', tbl)
 end
 
-local set_sep_highlight = function(color)
-  vim.api.nvim_set_hl(0, "St_file_bg", { link = color, force = true})
-  vim.api.nvim_set_hl(0, "St_file_txt", { link = color .. "sep", force = true })
-  vim.api.nvim_set_hl(0, "St_file_sep", { link = color .. "sep", force = true })
+-- Finds next color with least use
+local get_color = function(colormap)
+  local min = -1
+  local mincolor = 0
+  for k, v in pairs(colormap) do
+    if min == -1 or v < min then
+      mincolor = k
+      min = v
+    end
+  end
+  return mincolor or nil
 end
 
-autocmd({ "WinEnter", "WinClosed" }, {
+local test_get_color = function()
+  local map = {
+    Win0 = 1, Win1 = 0, Win2 = 0, Win3 = 0, Win4 = 0, Win5 = 0, Win6 = 0, Win7 = 0
+  }
+  local dmax = 0
+  local color = 0
+  for i=1, 1000 do
+    color = get_color(map)
+    map[color] = map[color] + 1
+
+    local u = -50
+    local l = math.huge
+    for _, v in pairs(map) do
+      l = math.min(l, v)
+      u = math.max(l, v)
+    end
+    dmax = math.max(dmax, u-l)
+  end
+  for k, v in pairs(map) do
+    print(k, v)
+  end
+end
+
+-- Returns window-ID of current window if focusable and not float
+local check_win = function()
+  local id = vim.api.nvim_get_current_win()
+  local config = vim.api.nvim_win_get_config(id)
+
+  -- Ignore floats and non-focusable windows
+  if config.relative ~= "" or not config.focusable then
+    return 0
+  end
+  return id
+end
+
+-- First window when entering vim, exempt from WinNew and WinEnter
+autocmd({ "VimEnter" }, {
+  group = vim.api.nvim_create_augroup("WindowSTLine", { clear = true }),
+  callback = function(args)
+    local id = check_win()
+    if not id then return end
+
+    local color = 'Win0'
+    vim.api.nvim_win_set_var(id, 'stcolor', color)
+    update_colormap(color, 1)
+    set_sep_highlight(color)
+
+  end
+})
+
+-- Get new color when new window
+autocmd({ "WinNew" }, {
+  group = vim.api.nvim_create_augroup("WindowSTLine", {clear = false}),
+  callback = function()
+    -- uncomment to test
+    -- test_get_color()
+    local id = check_win()
+    if not id then return end
+
+    local color = get_color(vim.g.stcolormap)
+    update_colormap(color, 1)
+    vim.api.nvim_win_set_var(id, 'stcolor', color)
+
+    print("new", id, color)
+    -- for k, v in pairs(vim.g.idmap) do print(k, v) end
+    for k, v in pairs(vim.g.stcolormap) do print(k, v) end
+  end
+})
+
+-- Set color when entering window
+autocmd({ "WinEnter" }, {
   group = vim.api.nvim_create_augroup("WindowSTLine", { clear = false }),
   callback = function(args)
-    local winid = vim.api.nvim_get_current_win()
+    local id = check_win()
+    if not id then return end
 
-    -- Ignore floating
-    local isrelative = vim.api.nvim_win_get_config(winid).relative
-    if isrelative ~= "" then return end
+    local color = vim.api.nvim_win_get_var(id, 'stcolor')
 
-    local wincolor = vim.w.stcolor
-    local new = 0
-    if not wincolor then
-      local m = 1
-      new = 1
-      for color, n in pairs(vim.g.stcolormap) do
-        m = math.max(m, n)
-        if n < m then
-          mapcolor(winid, color)
-          wincolor = color
-          break
-        end
-        mapcolor(winid, "Win7")
-      end
-    end
-    for k, v in pairs(vim.g.stcolormap) do print(k, v) end
-    -- Set or remove
-    if args.event == "WinClosed" then
-      vim.w.stcolor = nil
-    else
-      print(new, "set", winid, wincolor)
-      set_sep_highlight(wincolor)
-    end
+    -- Set
+    print("set", id, color)
+    set_sep_highlight(color)
   end,
 })
+
+-- Decrement 
+autocmd({ "WinClosed" }, {
+  group = vim.api.nvim_create_augroup("WindowSTLine", { clear = false }),
+  callback = function(args)
+    local id = check_win()
+    if not id then return end
+
+    local color = vim.api.nvim_win_get_var(id, 'stcolor')
+    update_colormap(color, -1)
+
+    print("rem", id, color)
+  end
+})
+
+-- End color changer

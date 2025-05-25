@@ -7,7 +7,7 @@ local M = {}
 
 M.base46 = {
   theme = "flexoki",
-
+  
   hl_override = {
     Comment = { italic = true },
     ["@comment"] = { italic = true },
@@ -18,25 +18,34 @@ M.base46 = {
     -- Special = { fg = "#111111" },
   },
   hl_add = {
-    Win0 = { bg = "#ff797c", fg = "black" }, -- #8b39ba
-    Win1 = { bg = "#ffd35f", fg = "black" },
-    Win2 = { bg = "#a1d34e", fg = "black" },
-    Win3 = { bg = "#469acf", fg = "black" },
-    Win4 = { bg = "#876da8", fg = "black" },
-    Win5 = { bg = "#6da97e", fg = "black" },
-    Win6 = { bg = "#42d4f4", fg = "black" },
-    Win7 = { bg = "#e282c8", fg = "black" },
-    Win0sep = { fg = "#ff797c", bg = "#292626"  }, -- #8b39ba
-    Win1sep = { fg = "#ffd35f", bg = "#292626"  }, --
-    Win2sep = { fg = "#a1d34e", bg = "#292626"  },
-    Win3sep = { fg = "#469acf", bg = "#292626"  },
-    Win4sep = { fg = "#876da8", bg = "#292626"  },
-    Win5sep = { fg = "#6da97e", bg = "#292626"  },
-    Win6sep = { fg = "#42d4f4", bg = "#292626"  },
-    Win7sep = { fg = "#e282c8", bg = "#292626"  },
+    Win0 =     { fg = "black", bg = "#ff797c" }, -- #8b39ba
+    Win1 =     { fg = "black", bg = "#ffd35f" },
+    Win2 =     { fg = "black", bg = "#a1d34e" },
+    Win3 =     { fg = "black", bg = "#469acf" },
+    Win4 =     { fg = "black", bg = "#876da8" },
+    Win5 =     { fg = "black", bg = "#6da97e" },
+    Win6 =     { fg = "black", bg = "#42d4f4" },
+    Win7 =     { fg = "black", bg = "#e282c8" },
+    Win0sep =  { fg = "#ff797c", bg = "black"  }, -- #8b39ba
+    Win1sep =  { fg = "#ffd35f", bg = "black"  }, --
+    Win2sep =  { fg = "#a1d34e", bg = "black"  },
+    Win3sep =  { fg = "#469acf", bg = "black"  },
+    Win4sep =  { fg = "#876da8", bg = "black"  },
+    Win5sep =  { fg = "#6da97e", bg = "black"  },
+    Win6sep =  { fg = "#42d4f4", bg = "black"  },
+    Win7sep =  { fg = "#e282c8", bg = "black"  },
+    Win0txt =  { fg = "#ff797c", bg = "#292626"  }, -- #8b39ba
+    Win1txt =  { fg = "#ffd35f", bg = "#292626"  }, --
+    Win2txt =  { fg = "#a1d34e", bg = "#292626"  },
+    Win3txt =  { fg = "#469acf", bg = "#292626"  },
+    Win4txt =  { fg = "#876da8", bg = "#292626"  },
+    Win5txt =  { fg = "#6da97e", bg = "#292626"  },
+    Win6txt =  { fg = "#42d4f4", bg = "#292626"  },
+    Win7txt =  { fg = "#e282c8", bg = "#292626"  },
+
   },
   -- "bearded-arc" solarized_osaka flexoki everblush
-  theme_toggle = { "solarized_osaka", "rxyhn" },
+  theme_toggle = { "flexoki", "rxyhn" },
 }
 
 M.nvdash = { load_on_startup = true }

@@ -5,30 +5,14 @@ return {
     -- tag = "v2.15", -- uncomment to pin to a specific release
 
     init = function()
-      -- ANTI EYE DAMAGE ALGORITHM
-      -- very human design
-      -- used to change config after dark, 
-      local is_day = function()
-        local hour = tonumber(vim.fn.strftime("%H", vim.fn.localtime()))
-        if hour >= 6 and hour < 18 then
-          return true
-        else
-          return false
-        end
-      end
-
-      -- set to dir containing zathurarc
-      local zathura_config_dir
-      if is_day() then
-        zathura_config_dir = "~/.config/zathura/day"
-      else
-        zathura_config_dir = "~/.config/zathura/night"
-      end
-
       -- VimTeX configuration goes here, e.g.
       -- vim.g.vimtex_view_general_viewer = 'evince'
-      vim.g.vimtex_view_method = "zathura"
-      vim.g.vimtex_view_zathura_options = "-c " .. zathura_config_dir
+      vim.g.vimtex_view_method = "zathura_simple" -- Use zathura_simple for wayland
+
+      -- Remove these lines to use regular config. See options.lua
+      vim.g.zathura_config_dir = "~/.config/zathura"
+      vim.g.vimtex_view_zathura_options = "-c " .. vim.g.zathura_config_dir
+
       vim.opt.conceallevel = 2
       vim.g.tex_conceal = "abdmg"
       vim.o.linebreak = true
@@ -37,7 +21,11 @@ return {
       local map = vim.keymap.set
       map("n", "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
       map("n", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
-    end
+
+    end,
+    config = function()
+      
+    end,
   },
   {
     "iurimateus/luasnip-latex-snippets.nvim",

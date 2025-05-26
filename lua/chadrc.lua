@@ -13,7 +13,7 @@ M.base46 = {
 
   hl_override = {
     Comment = { italic = true },
-    ["@comment"] = { italic = true, fg = "black2" },
+    ["@comment"] = { italic = true, fg = { "teal", -32 }},
     -- ["@constructor"] = { fg = "#27e86b"},
     -- ["@punctuation.bracket"] = { fg = "light_grey" },
     -- ["@property"]    = { fg = "#9b372e" },
@@ -35,6 +35,7 @@ M.base46 = {
 
   },
   hl_add = {
+    -- note to self :verbose hi yields more output
     Win0 =     { fg = "statusline_bg", bg = "#ff797c" }, -- #8b39ba
     Win1 =     { fg = "statusline_bg", bg = "#ffd35f" },
     Win2 =     { fg = "statusline_bg", bg = "#a1d34e" },
@@ -85,7 +86,27 @@ M.ui = {
 M.colorify = {
   enabled = true,
   mode = "virtual", -- fg, bg, virtual
-  virt_text = "󱓻 ",
+  
+  -- for the  devs:  󰙱 󰓠 󰿗 󰱫
+  -- for the dude:     
+  -- for the french:   󰼾  󰡔  󰟈 󰊨
+  -- for the italians:  󰡶
+  -- for americans:   󰗏  󱥗󰞪 󰾆 󰾅 󰓅   󰚏 󰺛 󰜃    󰱱  
+  --                    󱐚 󰴺  
+  -- for zuck:  󰆘
+  -- for the muslims: 󰥹     󱠫 󱀆
+  -- btw 
+  -- for the windows users:    󰜃 󰱬
+  -- for the webdevs:   󱖁 󱙷
+  -- for the zyn addicts:  
+  --  lightning poo (icon is called poo-storm lol)
+  --
+  -- single glyph:            󰓛 󰹞  󱪽  󰅁  󰣏  
+  -- double (space after): 󰙴 󰄛            
+  --     󱓻               󰪥 
+  -- 
+  --my faves: 󰣏 
+  virt_text = "󰣏", 
   highlight = { hex = true, lspvars = true },
 }
 

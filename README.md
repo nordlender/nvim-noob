@@ -5,9 +5,10 @@ My nvim config. Has an epic vimtex setup
 - Kind of buggy but still epic statusline color change for each window (visual feedback for the impaired)
 - Disabled arrow keys for the ill mannered
 - Epic mappings such as CTRL-L for window cycle, CTRL-J and K for scroll, etc
+- Epic anti eye destruction system when viewing pdfs with white background... hisssss!!! (I now use a shell script for this)
 
 # Todo
-- Add some nice autoexpanding lua snippets (oneline if, for etc)
+- Add some nice autoexpanding lua snippets (oneline if, for, etc)
 - More visual feedback for window switch autocmd (WindowSTLine)
 - Make winSTline friendlier with existing stline plugin
 - Make winSTline not react to completion popup 

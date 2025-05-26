@@ -14,25 +14,11 @@ autocmd({ "User" }, {
   pattern = "VimtexEventCompileStopped",
   group = vim.api.nvim_create_augroup("AutoWordcount", { clear = true }),
   callback = function (args)
-    -- ANTI EYE DAMAGE ALGORITHM
-    -- very human design
-    -- used to change config after dark, i should implement this in cmdline
-    local get_zathura_config_dir = function()
-      local hour = tonumber(vim.fn.strftime("%H", vim.fn.localtime()))
-      print(hour)
-      if hour >= 6 and hour < 16 then
-        return "~/.config/zathura/day"
-      elseif hour >= 16 and hour < 22 then
-        return "~/.config/zathura/evening"
-      else
-        return "~/.config/zathura/night"
-      end
-    end
-    vim.g.zathura_config = get_zathura_config_dir()
+    -- updates config with shell script
+    vim.cmd("call system('update_zathurarc')")
     vim.cmd("VimtexCountWords")
   end,
 })
-
 
 -- (per) Window Statusline color changer
 -- Sets unique (ish) color for each window for file block on stline

@@ -26,7 +26,7 @@ usrcmd("ZathurarcEdit",
         return
       end
     end
-
+    -- see man zathurarc
     local file = "zathurarc" -- required name
     local config_str, dir = utils.zedit.format_config(parsed_args)
 
@@ -62,9 +62,31 @@ autocmd({ "User" }, {
   pattern = "VimtexEventCompileStopped",
   group = vim.api.nvim_create_augroup("AutoWordcount", { clear = true }),
   callback = function (args)
-    -- NOTE: I made a config edit option instead. I use a bash script to get
-    -- my copy premade configs from a different directory to .config/zathura
+    -- NOTE: I made a config edit option instead. I use a bash script to
+    -- copy premade configs from a different directory to .config/zathura
     -- such that it works when opening pdfs from anywhere
+    --
+    -- Here is my bash script, needs adaptation
+    --#!/bin/bash
+    -- update_zathurarc()
+    -- {
+    --     local current_hour=$(date +%H)
+    --     local src 
+    --     local dest="${HOME}/.config/zathura/zathurarc"
+    --     if [ "$current_hour" -ge 17 ] || [ "$current_hour" -lt 6 ]; then
+    --       src="${HOME}/code/latex/zathuraconfig/beige"
+    --     else
+    --       src="${HOME}/code/latex/zathuraconfig/day"
+    --     fi
+    --     if cp "-f" "-T" "$src" "$dest"; then
+    --       # echo "Copied $src to $dest"
+    --       return 0
+    --     fi
+    --     return 1
+    -- }
+    --
+    -- update_zathurarc && zathura "$@" 
+
     --
     -- ANTI EYE DAMAGE ALGORITHM
     -- very human design

@@ -23,9 +23,6 @@ return {
       map("n", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
 
     end,
-    config = function()
-      
-    end,
   },
   {
     "iurimateus/luasnip-latex-snippets.nvim",

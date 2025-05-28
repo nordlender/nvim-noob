@@ -4,7 +4,7 @@ local function ismath()
 end
 
 local function no_ismath()
-  return vim.api.nvim_eval('vimtex#syntax#in_mathzone()') == 1
+  return vim.api.nvim_eval('vimtex#syntax#in_mathzone()') == 0
 end
 
 

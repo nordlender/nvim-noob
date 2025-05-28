@@ -19,6 +19,7 @@ return {
 
       -- Mappings
       local map = vim.keymap.set
+      -- change j and k when in latex (works for wrapped lines)
       map("n", "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
       map("n", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
 
@@ -52,6 +53,7 @@ return {
             snip.body
           ))
         end
+        -- Set type
         ls.add_snippets("tex", parsed_snippets, { type = type })
       end
     end,

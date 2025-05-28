@@ -5,7 +5,7 @@ My nvim config. Has an epic vimtex setup
 - Kind of buggy but still epic statusline color change for each window (visual feedback for the impaired)
 - Disabled arrow keys for the ill mannered
 - Epic mappings such as CTRL-L for window cycle, CTRL-J and K for scroll, etc
-- Epic anti eye destruction when viewing pdfs with white background... *hisssss!!!* (I now use a shell script for this)
+- Epic anti eye destruction when viewing pdfs with white background... *hisssss!!!* (see extras below)
 - Edit zathurarc with user command `ZathurarcEdit`
 
 # Todo
@@ -16,10 +16,11 @@ My nvim config. Has an epic vimtex setup
 - Tidy up
 
 # Extras
-Earlier I had my revolutionary "Anti I(Eye) Depreciation System", or AIDS for short. This has now been removed, and is now a bash script. I highly recommend any avid PDF-readers to use zathura, and configure it to have a beige background.
+Earlier I had my revolutionary "Anti I(Eye) Depreciation System", or AIDS for short. This has now been removed, and is now a bash script. I highly recommend any avid PDF-readers to use zathura, and configure it to have a beige background. AIDS allows you to update the config depending on the time (or any condition of your choice for that matter).
 
 Should you want to use this yourself, you can do the following:
 ## Setting up AIDS
+This guide is for linux, if you're on windows, just switch lol
 1. Create a script, in your location of choice
 2. Write the script as you please, but for convenience, it should copy or write your desired config to the location of zathurarc, overwriting the existing config, allowing any program to use the config without need for extra setup
     1. See **man zathurarc** for options, or search the web (arch wiki!)
@@ -59,8 +60,11 @@ update_zathurarc()
 # Run the shit
 update_zathurarc && zathura "$@"
 ```
-4. Update your pdf file association *(search for "change default application [distro]")*
-5. Boom, thank me later
+4. Make it executable `chmod +x epic_script.sh`
+5. Update your pdf file association *(search for "change default application [distro]")*
+6. Boom, thank me later
+
+Pro tip: for night mode, do set `recolor-darkcolor` to brown, and `recolor-lightcolor` to black
 
 # Credits
 1) Lazyvim starter https://github.com/LazyVim/starter as nvchad's starter was inspired by Lazyvim's . It made a lot of things easier!

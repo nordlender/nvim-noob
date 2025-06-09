@@ -161,4 +161,18 @@ M.window_stline = {
   end,
 }
 
+M.hl_override_map = {
+  kanagawa = {},
+  flexoki = {
+    ["@punctuation.bracket"] = { fg = "light_grey" },
+    ["@comment"] = { italic = true, fg = { "teal", -32 }},
+    ["@property"] = { fg = "#9b372e" },
+    ["@variable"] = { fg = { "light_grey", 17 } },
+  },
+  solarized_osaka = {
+    ["@keyword"]     = { link = "string" },
+    ["@string"]      = { link = "keyword" },
+  },
+}
+
 return M

@@ -6,34 +6,18 @@
 local M = {}
 
 M.base46 = {
-  theme = "flexoki",
+  theme = "kanagawa",
   -- bearded-arc solarized_osaka flexoki everblush 
   -- gatekeeper hiberbee rosepine tokyodark
-  theme_toggle = { "flexoki", "rxyhn" },
 
-  hl_override = {
-    Comment = { italic = true },
-    ["@comment"] = { italic = true, fg = { "teal", -32 }},
-    -- ["@constructor"] = { fg = "#27e86b"},
-    -- ["@punctuation.bracket"] = { fg = "light_grey" },
-    -- ["@property"]    = { fg = "#9b372e" },
-    -- ["@variable"]    = { fg = { "light_grey", 17 } },
-    -- ["@keyword"]     = { link = "string" },
-    -- ["@string"]      = { fg = "green"},
-    -- ["@operator"]    = { fg = { "light_grey" }},
-    -- Special          = { fg = "#111111" },
-    -- Repeat           = { fg = { "#8b39ba" }},
+  -- hl_override = vim.tbl_deep_extend("force",
+  --   hl_override_map[M.base46.theme],
+  --   {
+  --     -- Enter global override here
+  --     Comments = { italic = true, },
+  --   }
+  -- ),
 
-    -- solarized_osaka
-    -- ["@keyword"]     = { link = "string" },
-    -- ["@string"]      = { link = "keyword" },
-
-    -- Flexoki
-    ["@punctuation.bracket"] = { fg = "light_grey" },
-    ["@property"] = { fg = "#9b372e" },
-    ["@variable"] = { fg = { "light_grey", 17 } },
-
-  },
   hl_add = {
     -- note to self :verbose hi yields more output
     Win0 =     { fg = "statusline_bg", bg = "#ff797c" }, -- #8b39ba
@@ -60,7 +44,6 @@ M.base46 = {
     Win5txt =  { fg = "#6da97e", bg = "one_bg" },
     Win6txt =  { fg = "#42d4f4", bg = "one_bg" },
     Win7txt =  { fg = "#e282c8", bg = "one_bg" },
-
   },
 }
 
@@ -68,7 +51,7 @@ M.nvdash = { load_on_startup = true }
 
 M.ui = {
   tabufline = {
-    lazyload = false,
+    enabled = false,
   },
   cmp = {
     style = "default",
@@ -86,7 +69,7 @@ M.ui = {
 M.colorify = {
   enabled = true,
   mode = "virtual", -- fg, bg, virtual
-  
+
   -- for the  devs:  󰙱 󰓠 󰿗 󰱫
   -- for the dude:     
   -- for the french:   󰼾  󰡔  󰟈 󰊨
@@ -106,7 +89,7 @@ M.colorify = {
   --     󱓻               󰪥 
   -- 
   --my faves: 󰣏 
-  virt_text = "󰣏", 
+  virt_text = "󰣏",
   highlight = { hex = true, lspvars = true },
 }
 

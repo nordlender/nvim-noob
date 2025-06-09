@@ -7,7 +7,7 @@ o.cursorlineopt ='both' -- to enable cursorline!
 -- User commands
 --
 local usrcmd = vim.api.nvim_create_user_command
-local utils = require('utils')
+local utils = require('user.utils')
 
 local fmt = string.format
 

@@ -26,7 +26,12 @@ map("n", "<leader>rn", "<cmd>set rnu!<CR>", { desc = "Toggle relative number" })
 map("n", "<C-L>", "<C-W>w", { desc = "Cycle windows" })
 del("n", "<C-J>")
 del("n", "<C-K>")
-
+map("n", "<Tab>", ":tabn<CR>", { noremap = true, desc = "Next tab" })
+map("n", "<leader>ta", ":$tabnew<CR>", { noremap = true })
+map("n", "<leader>tx", ":tabclose<CR>", { noremap = true })
+map("n", "<leader>to", ":tabonly<CR>", { noremap = true })
+map("n", "<leader>tn", ":tabn<CR>", { noremap = true })
+map("n", "<leader>tp", ":tabp<CR>", { noremap = true })
 
 -- Viewing/screen/scroll
 map("n", "<C-J>", "<C-D>")

@@ -1,69 +1,72 @@
-require "nvchad.mappings"
+require "nvchad.vim.keymap.setpings"
 
--- add yours here
+--vim.keymap.set("n", ";", ":", { desc = "CMD enter command mode" })
+vim.keymap.set("i", "jk", "<ESC>", { desc = "Escape insert mode" })
 
-local map = vim.keymap.set
-local del = vim.keymap.del
-
---map("n", ";", ":", { desc = "CMD enter command mode" })
-map("i", "jk", "<ESC>", { desc = "Escape insert mode" })
-
--- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
+-- vim.keymap.set({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 
 -- Allow moving the cursor through wrapped lines with j, k, <Up> and <Down>
---map("n", "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
---map("n", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
---map("n", "<Up>", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
---map("n", "<Down>", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
+--vim.keymap.set("n", "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
+--vim.keymap.set("n", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
+--vim.keymap.set("n", "<Up>", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
+--vim.keymap.set("n", "<Down>", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
 
 
 -- Toggles
-map("n", "<leader>n", "<cmd>set nu!<CR>", { desc = "Toggle line number" })
-map("n", "<leader>rn", "<cmd>set rnu!<CR>", { desc = "Toggle relative number" })
+vim.keymap.set("n", "<leader>n", "<cmd>set nu!<CR>", { desc = "Toggle line number" })
+vim.keymap.set("n", "<leader>rn", "<cmd>set rnu!<CR>", { desc = "Toggle relative number" })
 
 
 -- Windows
-map("n", "<C-L>", "<C-W>w", { desc = "Cycle windows" })
-del("n", "<C-J>")
-del("n", "<C-K>")
-map("n", "<Tab>", ":tabn<CR>", { desc = "Next tab" })
-map("n", "<leader>ta", ":$tabnew<CR>", {})
-map("n", "<leader>tx", ":tabclose<CR>", {})
-map("n", "<leader>to", ":tabonly<CR>", {})
-map("n", "<leader>tn", ":tabn<CR>", {})
-map("n", "<leader>tp", ":tabp<CR>", {})
+vim.keymap.set("n", "<C-L>", "<C-W>w", { desc = "Cycle windows" })
+vim.keymap.del("n", "<C-J>")
+vim.keymap.del("n", "<C-K>")
+vim.keymap.set("n", "<Tab>", ":tabn<CR>", { desc = "Next tab" })
+vim.keymap.set("n", "<leader>ta", ":$tabnew<CR>", {})
+vim.keymap.set("n", "<leader>tx", ":tabclose<CR>", {})
+vim.keymap.set("n", "<leader>to", ":tabonly<CR>", {})
+vim.keymap.set("n", "<leader>tn", ":tabn<CR>", {})
+vim.keymap.set("n", "<leader>tp", ":tabp<CR>", {})
 
 -- Viewing/screen/scroll
-map("n", "<C-J>", "<C-D>")
-map("n", "<C-K>", "<C-U>")
-map("n", "<C-C>", "z.", { desc = "Center window at cursor"})
+vim.keymap.set("n", "<C-J>", "<C-D>")
+vim.keymap.set("n", "<C-K>", "<C-U>")
+vim.keymap.set("n", "<C-C>", "z.", { desc = "Center window at cursor"})
 
 
 -- Luasnip
--- map("i", "<C-n>", "<Plug>luasnip-next-choice", {})
--- map("s", "<C-n>", "<Plug>luasnip-next-choice", {})
--- map("i", "<C-p>", "<Plug>luasnip-prev-choice", {})
--- map("s", "<C-p>", "<Plug>luasnip-prev-choice", {})
+-- vim.keymap.set("i", "<C-n>", "<Plug>luasnip-next-choice", {})
+-- vim.keymap.set("s", "<C-n>", "<Plug>luasnip-next-choice", {})
+-- vim.keymap.set("i", "<C-p>", "<Plug>luasnip-prev-choice", {})
+-- vim.keymap.set("s", "<C-p>", "<Plug>luasnip-prev-choice", {})
+-- vim.keymap.set({ "i", "s" }, "<tab>", "<Plug>luasnip-jump-next", {})
+-- vim.keymap.set({ "i", "s" }, "<tab>", function()
+-- 	if require("luasnip").jumpable(1) then 
+-- 		vim.schedule(function() require("luasnip").jump(1) end)
+-- 	else
+-- 		return "<tab>"
+-- 	end
+-- end, { revim.keymap.set = false, silent = true, nowait = true, desc = "LuaSnip jump, otherwise tab" })
 
 -- term
 local term = require "nvchad.term"
 
-map("t", "<C-x>", "<C-\\><C-N>", { desc = "Term escape terminal mode" })
-map("t", "<A-x>", "<C-\\><C-n>:q<CR>", { desc = "Term close" })
+vim.keymap.set("t", "<C-x>", "<C-\\><C-N>", { desc = "Term escape terminal mode" })
+vim.keymap.set("t", "<A-x>", "<C-\\><C-n>:q<CR>", { desc = "Term close" })
 
-map({ "n", "t" }, "<A-v>", function()
+vim.keymap.set({ "n", "t" }, "<A-v>", function()
   term.toggle { pos = "vsp", id = "vtoggleTerm" }
 end, { desc = "Term toggle vertical split" })
 
-map({ "n", "t" }, "<A-h>", function()
+vim.keymap.set({ "n", "t" }, "<A-h>", function()
   term.toggle { pos = "sp", id = "htoggleTerm" }
 end, { desc = "Term toggle horizontal split" })
 
-map({ "n", "t" }, "<A-t>", function()
+vim.keymap.set({ "n", "t" }, "<A-t>", function()
   term.toggle { pos = "float", id = "ftoggleTerm" }
 end, { desc = "Term toggle float" })
 
-map({ "n", "t" }, "<C-A-l>", function()
+vim.keymap.set({ "n", "t" }, "<C-A-l>", function()
   term.toggle {
     pos = "sp",
     id = "htoggleTermLoc",
@@ -71,7 +74,7 @@ map({ "n", "t" }, "<C-A-l>", function()
   }
 end, { desc = "Term toggle horizontal split in buffer location" })
 
-map({ "n", "t" }, "<A-r>", function()
+vim.keymap.set({ "n", "t" }, "<A-r>", function()
   vim.cmd("w")
   require("nvchad.term").runner {
     id = "py_runner",
@@ -83,7 +86,7 @@ end, { desc = "Run current Python file in vertical split terminal" })
 
 
 -- open config
-map("n", "<leader>cf", function()
+vim.keymap.set("n", "<leader>cf", function()
   local api = require("nvim-tree.api")
   vim.cmd("cd ~/.config/nvim")           -- change working directory
   api.tree.open()
@@ -93,18 +96,18 @@ end, { desc = "Configure nvim" })
 
 
 -- Disable Arrows
-map('n', '<Left>', ':echo "No left for you!"<CR>', { silent = true })
-map('v', '<Left>', ':<C-u>echo "No left for you!"<CR>', { silent = true })
-map('i', '<Left>', '<C-o>:echo "No left for you!"<CR>', { silent = true })
+vim.keymap.set('n', '<Left>', ':echo "No left for you!"<CR>', { silent = true })
+vim.keymap.set('v', '<Left>', ':<C-u>echo "No left for you!"<CR>', { silent = true })
+vim.keymap.set('i', '<Left>', '<C-o>:echo "No left for you!"<CR>', { silent = true })
 
-map('n', '<Right>', ':echo "No right for you!"<CR>', { silent = true })
-map('v', '<Right>', ':<C-u>echo "No right for you!"<CR>', { silent = true })
-map('i', '<Right>', '<C-o>:echo "No right for you!"<CR>', { silent = true })
+vim.keymap.set('n', '<Right>', ':echo "No right for you!"<CR>', { silent = true })
+vim.keymap.set('v', '<Right>', ':<C-u>echo "No right for you!"<CR>', { silent = true })
+vim.keymap.set('i', '<Right>', '<C-o>:echo "No right for you!"<CR>', { silent = true })
 
-map('n', '<Up>', ':echo "No up for you!"<CR>', { silent = true })
-map('v', '<Up>', ':<C-u>echo "No up for you!"<CR>', { silent = true })
-map('i', '<Up>', '<C-o>:echo "No up for you!"<CR>', { silent = true })
+vim.keymap.set('n', '<Up>', ':echo "No up for you!"<CR>', { silent = true })
+vim.keymap.set('v', '<Up>', ':<C-u>echo "No up for you!"<CR>', { silent = true })
+vim.keymap.set('i', '<Up>', '<C-o>:echo "No up for you!"<CR>', { silent = true })
 
-map('n', '<Down>', ':echo "No down for you!"<CR>', { silent = true })
-map('v', '<Down>', ':<C-u>echo "No down for you!"<CR>', { silent = true })
-map('i', '<Down>', '<C-o>:echo "No down for you!"<CR>', { silent = true })
+vim.keymap.set('n', '<Down>', ':echo "No down for you!"<CR>', { silent = true })
+vim.keymap.set('v', '<Down>', ':<C-u>echo "No down for you!"<CR>', { silent = true })
+vim.keymap.set('i', '<Down>', '<C-o>:echo "No down for you!"<CR>', { silent = true })

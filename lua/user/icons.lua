@@ -1,5 +1,12 @@
 local M = {}
 
+M.language = function(filename, extension)
+	local icon, color = require("nvim-web-devicons").get_icon(
+		filename, extension, { default = true }
+	)
+	return icon, color
+end
+
 M.file = {
   default = "󰈚",
   symlink = "",
@@ -34,6 +41,42 @@ M.indent_markers = {
   item = "│",
   bottom = "─",
   none = " ",
+}
+--    󰲠 󰲢 󰲤 󰲦 󰲨 󰲪 󰲬 󰲮 󰲰 󰿬 󰲲 󰎤
+M.selected = {
+	diamond_slim = {
+		y = "󰣏",
+		n = "󱀝",
+	},
+	diamond_wide = {
+		y = "",
+		n = "",
+	},
+}
+--      
+M.separator = {
+	arrow = {
+		l = "",
+		r = "",
+	},
+	inverted_arrow = {
+		l = "",
+		r = "",
+	},
+	round = {
+		l = "",
+		r = "",
+	},
+	triangle = {
+		l = {
+			up = "",
+			lo = "",
+		},
+		r = {
+			up = "",
+			lo = "",
+		},
+	},
 }
 
 M.tree = {

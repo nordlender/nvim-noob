@@ -19,6 +19,9 @@ M.base46 = {
   -- ),
 
   hl_add = {
+	-- TabLineFill = { link = "St_cwd_txt" },
+	-- TabLineSel = { link = "St_cwd_bg" },
+	-- TabLine = { link = "St_cwd_txt" },
     -- note to self :verbose hi yields more output
     Win0 =     { fg = "statusline_bg", bg = "#ff797c" }, -- #8b39ba
     Win1 =     { fg = "statusline_bg", bg = "#ffd35f" },
@@ -28,14 +31,14 @@ M.base46 = {
     Win5 =     { fg = "statusline_bg", bg = "#6da97e" },
     Win6 =     { fg = "statusline_bg", bg = "#42d4f4" },
     Win7 =     { fg = "statusline_bg", bg = "#e282c8" },
-    Win0sep =  { fg = "#ff797c", bg = "statusline_bg"  }, -- #8b39ba
-    Win1sep =  { fg = "#ffd35f", bg = "statusline_bg"  }, --
-    Win2sep =  { fg = "#a1d34e", bg = "statusline_bg"  },
-    Win3sep =  { fg = "#469acf", bg = "statusline_bg"  },
-    Win4sep =  { fg = "#876da8", bg = "statusline_bg"  },
-    Win5sep =  { fg = "#6da97e", bg = "statusline_bg"  },
-    Win6sep =  { fg = "#42d4f4", bg = "statusline_bg"  },
-    Win7sep =  { fg = "#e282c8", bg = "statusline_bg"  },
+    Win0sep =  { fg = "#ff797c", bg = "statusline_bg" }, -- #8b39ba
+    Win1sep =  { fg = "#ffd35f", bg = "statusline_bg" }, --
+    Win2sep =  { fg = "#a1d34e", bg = "statusline_bg" },
+    Win3sep =  { fg = "#469acf", bg = "statusline_bg" },
+    Win4sep =  { fg = "#876da8", bg = "statusline_bg" },
+    Win5sep =  { fg = "#6da97e", bg = "statusline_bg" },
+    Win6sep =  { fg = "#42d4f4", bg = "statusline_bg" },
+    Win7sep =  { fg = "#e282c8", bg = "statusline_bg" },
     Win0txt =  { fg = "#ff797c", bg = "one_bg" }, -- #8b39ba
     Win1txt =  { fg = "#ffd35f", bg = "one_bg" }, --
     Win2txt =  { fg = "#a1d34e", bg = "one_bg" },

@@ -26,18 +26,24 @@ map("n", "<leader>rn", "<cmd>set rnu!<CR>", { desc = "Toggle relative number" })
 map("n", "<C-L>", "<C-W>w", { desc = "Cycle windows" })
 del("n", "<C-J>")
 del("n", "<C-K>")
-map("n", "<Tab>", ":tabn<CR>", { noremap = true, desc = "Next tab" })
-map("n", "<leader>ta", ":$tabnew<CR>", { noremap = true })
-map("n", "<leader>tx", ":tabclose<CR>", { noremap = true })
-map("n", "<leader>to", ":tabonly<CR>", { noremap = true })
-map("n", "<leader>tn", ":tabn<CR>", { noremap = true })
-map("n", "<leader>tp", ":tabp<CR>", { noremap = true })
+map("n", "<Tab>", ":tabn<CR>", { desc = "Next tab" })
+map("n", "<leader>ta", ":$tabnew<CR>", {})
+map("n", "<leader>tx", ":tabclose<CR>", {})
+map("n", "<leader>to", ":tabonly<CR>", {})
+map("n", "<leader>tn", ":tabn<CR>", {})
+map("n", "<leader>tp", ":tabp<CR>", {})
 
 -- Viewing/screen/scroll
 map("n", "<C-J>", "<C-D>")
 map("n", "<C-K>", "<C-U>")
 map("n", "<C-C>", "z.", { desc = "Center window at cursor"})
 
+
+-- Luasnip
+-- map("i", "<C-n>", "<Plug>luasnip-next-choice", {})
+-- map("s", "<C-n>", "<Plug>luasnip-next-choice", {})
+-- map("i", "<C-p>", "<Plug>luasnip-prev-choice", {})
+-- map("s", "<C-p>", "<Plug>luasnip-prev-choice", {})
 
 -- term
 local term = require "nvchad.term"
@@ -87,18 +93,18 @@ end, { desc = "Configure nvim" })
 
 
 -- Disable Arrows
-map('n', '<Left>', ':echo "No left for you!"<CR>', { noremap = true, silent = true })
-map('v', '<Left>', ':<C-u>echo "No left for you!"<CR>', { noremap = true, silent = true })
-map('i', '<Left>', '<C-o>:echo "No left for you!"<CR>', { noremap = true, silent = true })
+map('n', '<Left>', ':echo "No left for you!"<CR>', { silent = true })
+map('v', '<Left>', ':<C-u>echo "No left for you!"<CR>', { silent = true })
+map('i', '<Left>', '<C-o>:echo "No left for you!"<CR>', { silent = true })
 
-map('n', '<Right>', ':echo "No right for you!"<CR>', { noremap = true, silent = true })
-map('v', '<Right>', ':<C-u>echo "No right for you!"<CR>', { noremap = true, silent = true })
-map('i', '<Right>', '<C-o>:echo "No right for you!"<CR>', { noremap = true, silent = true })
+map('n', '<Right>', ':echo "No right for you!"<CR>', { silent = true })
+map('v', '<Right>', ':<C-u>echo "No right for you!"<CR>', { silent = true })
+map('i', '<Right>', '<C-o>:echo "No right for you!"<CR>', { silent = true })
 
-map('n', '<Up>', ':echo "No up for you!"<CR>', { noremap = true, silent = true })
-map('v', '<Up>', ':<C-u>echo "No up for you!"<CR>', { noremap = true, silent = true })
-map('i', '<Up>', '<C-o>:echo "No up for you!"<CR>', { noremap = true, silent = true })
+map('n', '<Up>', ':echo "No up for you!"<CR>', { silent = true })
+map('v', '<Up>', ':<C-u>echo "No up for you!"<CR>', { silent = true })
+map('i', '<Up>', '<C-o>:echo "No up for you!"<CR>', { silent = true })
 
-map('n', '<Down>', ':echo "No down for you!"<CR>', { noremap = true, silent = true })
-map('v', '<Down>', ':<C-u>echo "No down for you!"<CR>', { noremap = true, silent = true })
-map('i', '<Down>', '<C-o>:echo "No down for you!"<CR>', { noremap = true, silent = true })
+map('n', '<Down>', ':echo "No down for you!"<CR>', { silent = true })
+map('v', '<Down>', ':<C-u>echo "No down for you!"<CR>', { silent = true })
+map('i', '<Down>', '<C-o>:echo "No down for you!"<CR>', { silent = true })

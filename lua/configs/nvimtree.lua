@@ -1,27 +1,19 @@
 -- copy of nvchad nvimtree config
 dofile(vim.g.base46_cache .. "nvimtree")
 
--- Puts tex files first
--- local sorter = function(nodes)
---   table.sort(nodes, function(a, b)
---     local a_is_tex = a.extension == "tex"
---     local b_is_tex = b.extension == "tex"
---
---     if a_is_tex and not b_is_tex then
---       return true
---     elseif not a_is_tex and b_is_tex then
---       return false
---     else
---       return a.name:lower() < b.name:lower()
---     end
---   end)
--- end
-
 return {
-  -- always split
-  -- nvim.open.vertical_no_picker
-  -- in on_attach
-
+  -- on_attach = function(bufnr)
+  -- local api = require("nvim-tree.api")
+  -- local map = vim.keymap.set
+  -- local unmap = vim.keymap.del
+  -- local function opts(desc)
+  -- 	return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+  -- end
+  --
+  -- map("n", "<2-LeftMouse>", api.node.open.horizontal_no_picker)
+  -- map
+  --
+  -- end,
   filters = { dotfiles = false },
   disable_netrw = true,
   hijack_cursor = true,

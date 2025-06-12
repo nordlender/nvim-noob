@@ -48,16 +48,13 @@ return {
     -- BufRead is to make sure if you do nvim some_file then this is still going to be loaded
     event = { "VeryLazy", "BufRead" },
     config = function()
-      -- load defaults i.e lua_lsp
-      require("nvchad.configs.lspconfig").defaults()
       local lspconfig = require "lspconfig"
       local nvlsp = require "nvchad.configs.lspconfig"
+      nvlsp.defaults()
       local servers = {
         texlab = {},
         html = {},
         cssls = {},
-        stylua = {},
-        lua_ls = {},
         clangd = {},
         ruff = {
           init_options = {

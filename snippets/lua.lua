@@ -9,79 +9,92 @@ local d = ls.dynamic_node
 local r = ls.restore_node
 local fmta = require("luasnip.extras.fmt").fmta
 
--- s({ trig = "test1", name = "test1"}, { t("Joe mama("), i(1), i(2), f(function (args, parent, user_args)
--- 	local str = args[1][1]
--- 	local ret = (str ~= "" and "hei ") or "fitte "
--- 	return '[' .. ret .. user_args .. ']'
--- end, {1}, { user_args = { "kuk" }}
--- ),
--- })
--- s({ trig = "keymap", name = "vim.keymap.set", desc = "Dynamic keymap set"},
--- 		fmta("vim.keymap.set(<l><mode><r>, '<lhs>', <rhs>, { <><><><><><><> })", {
--- 			-- mode = sn(1, { i(1, "n"), f(keymap_make_modes, {1}, {})}),
--- 			mode = i(1, "n"),
--- 		  lhs = i(2, "lhs"), rhs = i(3, "rhs"),
--- 		c(4, { t(""), t("remap = true, ") }),
--- 		c(5, { t(""), t("silent = true, ") }),
--- 		c(6, { t(""), t("nowait = true, ") }),
--- 		c(7, { t(""), t("expr = true, ")}),
--- 		c(8, { t(""), t("unique = true, ")}),
--- 		c(9, { t(""), sn(nil, {t("buffer = "), i(1, "true"), t(", ")})}),
--- 		c(10, { sn(nil, {t("desc = "), i(1)}), t("")}),
--- 		})
--- 	),
-
--- local substitute = function(str)
--- 	local ret = str
--- 	local p, n = ret:gsub("[vsx]", ".")
--- 	if str:match("v") or n > 1 then
--- 		ret = p:gsub(string.rep(".", n), "v")
--- 	end
--- 	p, n = ret:gsub("!", ".")
--- 	if n then
--- 		p, n = p:gsub("[ic]", ".")
--- 		ret = str:gsub(string.rep(".", n), "ic")
--- 	end
--- 	return ret
--- end
---
--- local keymap_make_modes = function(args)
--- 	local ret = ""
--- 	local pattern = ""
--- 	local arg_str = args[1][1]
--- 	if arg_str == "" then
--- 		pattern = "nvo"
--- 	else
--- 		print(arg_str, type(arg_str))
--- 		local modes = { "n", "!", "i", "c", "v", "x", "s", "o", "t", "l" }
--- 		for _, char in ipairs(modes) do
--- 			local a = string.match(arg_str, char)
--- 			a = a ~= nil and a or ""
--- 			pattern = pattern .. a
--- 		end
--- 		pattern = substitute(pattern) -- remove equivalent mode args
--- 	end
---
--- 	if pattern:len() > 1 then
--- 		ret = "{ "
--- 		pattern:gsub(".", function(char)
--- 			ret = ret .. string.format("'%s', ", char)
--- 		end)
--- 		ret = ret:gsub(".%s$", " }") -- remove last comma
--- 	else
--- 		ret = string.format("'%s'", pattern)
--- 	end
--- 	return ret
--- end
-
 -- "<buffer>", "<nowait>", "<silent>", "<script>", "<expr>" and "<unique>"
 -- see :h map-modes
 -- modes "" norm vis sel opr, "n" norm, "i" ins, "v" vis and select, 
 -- "x" vis, "!" ins and cmd, "s" select, "o" opr, "t" term 
 -- ia abbreviation in insert, "ca" abbr. cmdline, !a both
-local snippets = { 
+
+---@alias modeChar
+---|"n"|"v"|"x"|"s"|"o"|"i"|"l"|"c"|"t"|"!"
+---@alias modeString string @A nonrepeating combination of modeChar letters
+
+
+---@param mode_str modeString
+local map_filter_args = function(mode_str)
+	local ret = mode_str
+	local p, n = ret:gsub("[vsx]", "1")
+	if mode_str:match("v") or n > 1 then
+		ret = p:gsub(string.rep("1", n), "v")
+	end
+	n = 0
+	p, n = ret:gsub("!", "1")
+	if n > 0 then
+		p, n = p:gsub("[ic]", "1")
+		ret = p:gsub(string.rep("1", n), "ic")
+	end
+	ret = p
+	return ret
+end
+---@param mode_str modeString
+local map_format_modes = function(mode_str)
+	local ret = ""
+	if #mode_str > 1 then
+		ret = "{ "
+		mode_str:gsub(".", function(char)
+			ret = ret .. string.format("'%s', ", char)
+		end)
+		ret = ret:gsub(".%s$", " }") -- remove last comma
+	else
+		ret = string.format("'%s'", mode_str)
+	end
+	return ret
+end
+
+local map_get_modes = function(_, snip)
+	local mode_str = ""
+	local cmode = snip.captures[1] -- capture modes
+	local cbang = snip.captures[3] -- if [map] !
+	print(cmode, type(cmode))
+	cmode = (cmode ~= nil and cmode) or ""
+	cbang = (cbang ~= nil and cbang) or ""
+
+	if cmode == "" then
+		mode_str = (cbang ~= "" and "ic") or "nvo"
+	else
+		local tmp = ""
+		for _, char in ipairs({
+			"n", "v", "x", "s", "o", "i", "l", "c", "t", "!"})
+		do -- Removes duplicates
+			tmp = string.match(cmode, char)
+			tmp = tmp ~= nil and tmp or ""
+			mode_str = mode_str .. tmp
+		end
+		mode_str = map_filter_args(mode_str)
+	end
+	return map_format_modes(mode_str)
+end
+
+local snippets = {
 }
 
-local autosnippets = {}
+
+local autosnippets = {
+	s({ trig = "^:([nvxsoilct!]*)(map)([!]?)%s", trigEngine = "pattern", name = ":map",
+		desc = ":map to vim.keymap.set dynamic snippet" },
+		fmta("vim.keymap.set(<mode>, '<lhs>', <rhs>, { <><><><><><><> })", {
+			mode = f(map_get_modes, {}),
+			lhs = i(1, "lhs"),
+			rhs = i(2),
+			c(3, { t(""), t("remap = true, ") }),
+			c(4, { t(""), t("silent = true, ") }),
+			c(5, { t(""), t("nowait = true, ") }),
+			c(6, { t(""), t("expr = true, ")}),
+			c(7, { t(""), t("unique = true, ")}),
+			c(8, { t(""), sn(nil, {t("buffer = "), i(1, "true"), t(", ")})}),
+			c(9, { sn(nil, {t("desc = '"), i(1), t("'")}), t("")}),
+		})
+	),
+}
 
 return snippets, autosnippets

@@ -1,4 +1,4 @@
-require "nvchad.vim.keymap.setpings"
+require "nvchad.mappings"
 
 --vim.keymap.set("n", ";", ":", { desc = "CMD enter command mode" })
 vim.keymap.set("i", "jk", "<ESC>", { desc = "Escape insert mode" })
@@ -11,7 +11,6 @@ vim.keymap.set("i", "jk", "<ESC>", { desc = "Escape insert mode" })
 --vim.keymap.set("n", "<Up>", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
 --vim.keymap.set("n", "<Down>", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
 
-
 -- Toggles
 vim.keymap.set("n", "<leader>n", "<cmd>set nu!<CR>", { desc = "Toggle line number" })
 vim.keymap.set("n", "<leader>rn", "<cmd>set rnu!<CR>", { desc = "Toggle relative number" })
@@ -21,7 +20,7 @@ vim.keymap.set("n", "<leader>rn", "<cmd>set rnu!<CR>", { desc = "Toggle relative
 vim.keymap.set("n", "<C-L>", "<C-W>w", { desc = "Cycle windows" })
 vim.keymap.del("n", "<C-J>")
 vim.keymap.del("n", "<C-K>")
-vim.keymap.set("n", "<Tab>", ":tabn<CR>", { desc = "Next tab" })
+vim.keymap.set("n", "<Tab>", ":tabn<CR>", { silent = true, desc = "Next tab" })
 vim.keymap.set("n", "<leader>ta", ":$tabnew<CR>", {})
 vim.keymap.set("n", "<leader>tx", ":tabclose<CR>", {})
 vim.keymap.set("n", "<leader>to", ":tabonly<CR>", {})
@@ -35,10 +34,10 @@ vim.keymap.set("n", "<C-C>", "z.", { desc = "Center window at cursor"})
 
 
 -- Luasnip
--- vim.keymap.set("i", "<C-n>", "<Plug>luasnip-next-choice", {})
--- vim.keymap.set("s", "<C-n>", "<Plug>luasnip-next-choice", {})
--- vim.keymap.set("i", "<C-p>", "<Plug>luasnip-prev-choice", {})
--- vim.keymap.set("s", "<C-p>", "<Plug>luasnip-prev-choice", {})
+vim.keymap.set("i", "<C-n>", "<Plug>luasnip-next-choice", {})
+vim.keymap.set("s", "<C-n>", "<Plug>luasnip-next-choice", {})
+vim.keymap.set("i", "<C-p>", "<Plug>luasnip-prev-choice", {})
+vim.keymap.set("s", "<C-p>", "<Plug>luasnip-prev-choice", {})
 -- vim.keymap.set({ "i", "s" }, "<tab>", "<Plug>luasnip-jump-next", {})
 -- vim.keymap.set({ "i", "s" }, "<tab>", function()
 -- 	if require("luasnip").jumpable(1) then 

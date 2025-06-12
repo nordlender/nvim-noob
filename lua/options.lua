@@ -76,11 +76,22 @@ usrcmd("ZathurarcEdit",
 -- Autocmds
 --
 require "nvchad.autocmds"
-local autocmd = vim.api.nvim_create_autocmd
+
+-- Open choice menu when entering choice node
+--
+-- local ls_choice_au = vim.api.nvim_create_augroup("LuasnipChoiceMenu", { clear = true })
+-- vim.api.nvim_create_autocmd({ "User" }, {
+-- 	group = ls_choice_au,
+-- 	pattern = "LuasnipChoiceNodeEnter",
+-- 	callback = function()
+-- 		-- Replace this, breaks jumps
+-- 		-- require("luasnip.extras.select_choice")()
+-- 	end,
+-- })
 
 -- Vimtex auto word count
 --
-autocmd({ "User" }, {
+vim.api.nvim_create_autocmd({ "User" }, {
   pattern = "VimtexEventCompileStopped",
   group = vim.api.nvim_create_augroup("AutoWordcount", { clear = true }),
   command="VimtexCountWords",
@@ -94,9 +105,10 @@ vim.g.wst_color_counts = {
   Win0 = 0, Win1 = 0, Win2 = 0, Win3 = 0, Win4 = 0, Win5 = 0, Win6 = 0, Win7 = 0
 }
 
+local wst_au = vim.api.nvim_create_augroup("WindowSTLine", { clear = true })
 -- First window when entering vim, exempt from WinNew and WinEnter
-autocmd({ "VimEnter" }, {
-  group = vim.api.nvim_create_augroup("WindowSTLine", { clear = true }),
+vim.api.nvim_create_autocmd({ "VimEnter" }, {
+  group = wst_au,
   callback = function(args)
     local id = utils.window_stline.check_win()
     if not id then return end
@@ -109,8 +121,8 @@ autocmd({ "VimEnter" }, {
   end
 })
 -- Get new color when new window
-autocmd({ "WinNew" }, {
-  group = vim.api.nvim_create_augroup("WindowSTLine", {clear = false}),
+vim.api.nvim_create_autocmd({ "WinNew" }, {
+  group = wst_au,
   callback = function()
     -- uncomment to test
     -- utils.window_stline.test_get_color()
@@ -127,8 +139,8 @@ autocmd({ "WinNew" }, {
   end
 })
 -- Set color when entering window
-autocmd({ "WinEnter" }, {
-  group = vim.api.nvim_create_augroup("WindowSTLine", { clear = false }),
+vim.api.nvim_create_autocmd({ "WinEnter" }, {
+  group = wst_au,
   callback = function(args)
     local id = utils.window_stline.check_win()
     if not id then return end
@@ -141,8 +153,8 @@ autocmd({ "WinEnter" }, {
   end,
 })
 -- Decrement 
-autocmd({ "WinClosed" }, {
-  group = vim.api.nvim_create_augroup("WindowSTLine", { clear = false }),
+vim.api.nvim_create_autocmd({ "WinClosed" }, {
+  group = wst_au,
   callback = function(args)
     local id = utils.window_stline.check_win()
     if not id then return end

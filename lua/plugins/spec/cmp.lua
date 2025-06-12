@@ -12,11 +12,13 @@ return {
     	}
     },
     event = { "InsertEnter" },
-    opts = { history = true, updateevents = "TextChanged,TextChangedI" },
+    opts = {
+    	history = true, updateevents = "TextChanged,TextChangedI",
+    	enable_autosnippets = true,
+    },
     config = function(_, opts)
       require("luasnip").config.set_config(opts)
       require "nvchad.configs.luasnip"
-      require("luasnip.loaders.from_lua").load({ paths = "./snippets"})
     end,
     build = "make install_jsregexp"
   },
@@ -27,6 +29,7 @@ return {
     dependencies = { 'L3MON4D3/LuaSnip', version = 'v2.*' },
     event = { "InsertEnter", "CmdlineEnter" },
     opts = require('configs.blink'),
+    opts_extend = { "sources.default" }
   },
   {
     "windwp/nvim-autopairs",

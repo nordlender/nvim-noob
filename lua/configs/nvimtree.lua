@@ -1,19 +1,18 @@
 -- copy of nvchad nvimtree config
 dofile(vim.g.base46_cache .. "nvimtree")
 
+local user_on_attach = function()
+	
+	local api = require("nvim-tree.api")
+	local function opts(desc)
+		return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+	end
+	-- See nvim-tree-mappings-default
+	vim.keymap.set("n", "<CR>", api.node.open.edit, opts("Open"))
+end
+
 return {
-  -- on_attach = function(bufnr)
-  -- local api = require("nvim-tree.api")
-  -- local map = vim.keymap.set
-  -- local unmap = vim.keymap.del
-  -- local function opts(desc)
-  -- 	return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-  -- end
-  --
-  -- map("n", "<2-LeftMouse>", api.node.open.horizontal_no_picker)
-  -- map
-  --
-  -- end,
+  -- on_attach = user_on_attach,
   filters = { dotfiles = false },
   disable_netrw = true,
   hijack_cursor = true,

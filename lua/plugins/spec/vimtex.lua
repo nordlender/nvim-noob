@@ -29,33 +29,9 @@ return {
     "iurimateus/luasnip-latex-snippets.nvim",
     -- vimtex isn't required if using treesitter
     ft = "tex",
-    requires = { "L3MON4D3/LuaSnip", "lervag/vimtex" },
-
-    config = function()
-      require'luasnip-latex-snippets'.setup({
-        use_treesitter = false,
-      })
-      -- or setup({ use_treesitter = true })
-      require("luasnip").config.setup {
-        enable_autosnippets = true,
-      }
-
-      -- Snippets
-      local ls = require("luasnip")
-      local snippets = require "snippets.tex"
-
-      -- parse snippets
-      for type, sniplist in pairs(snippets) do
-        local parsed_snippets = {}
-        for snip in vim.iter(sniplist) do
-          table.insert(parsed_snippets, ls.parser.parse_snippet(
-            { trig = snip.trig, name = snip.name, condition = snip.condition, priority = snip.priority },
-            snip.body
-          ))
-        end
-        -- Set type
-        ls.add_snippets("tex", parsed_snippets, { type = type })
-      end
-    end,
+    dependencies = { "L3MON4D3/LuaSnip", "lervag/vimtex" },
+    opts = {
+    	use_treesitter = false,
+		}
   },
 }

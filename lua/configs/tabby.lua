@@ -4,7 +4,52 @@ local api = require("tabby.module.api")
 local sep = require("user.icons").separator.triangle
 local selected = require("user.icons").selected.diamond_slim
 
-local make_tabs = function(line, tab, theme)
+local not_float = function(win)
+	return api.is_not_float_win(win.id)
+end
+
+
+local make_win = function(win, i, count, hl, lsep, rsep)
+	local ret = {
+		win.buf_name(),
+		win.file_icon()
+	}
+	if count > 1 then
+		ret = {
+			lsep,
+			' ',
+			win.buf_name(),
+			win.file_icon(),
+			' ',
+			rsep,
+			hl = hl,
+		}
+	end
+	return ret
+end
+
+local make_win_nodes = function(wins, line, theme)
+	local after_current = false
+	local nodes = wins.foreach(function(win, i, count)
+		local hl = theme.win
+		local lsep = (i == 1) and sep.r.lo or ''
+		local rsep = (i == count) and sep.l.up or ''
+		if after_current == true then
+			lsep = sep.r.lo
+			after_current = false
+		end
+		if win.is_current() then
+			hl = theme.current_tab
+			rsep = (i == count) and lsep or rsep
+			lsep = (i == 1) and '' or line.sep(sep.l.up, hl, theme.win)
+			after_current = true
+		end
+		return make_win(win, i, count, hl, lsep, rsep)
+	end)
+	return nodes
+end
+
+local make_tab = function(line, tab, theme)
 	local ret = {}
 	local current_n = api.get_tab_number(api.get_current_tab())
 	local n = tab.number()
@@ -17,10 +62,9 @@ local make_tabs = function(line, tab, theme)
 		hl = theme.current_tab
 		ret = {
 			line.sep(lsep, hl, theme.fill),
-			selected.y,
+			-- selected.y,
 			tab.number(),
-			tab.name(),
-			tab.close_btn(''),
+			make_win_nodes(tab.wins().filter(not_float), line, theme),
 			line.sep(rsep, hl, theme.fill),
 			hl = hl,
 			margin = ' ',
@@ -28,7 +72,7 @@ local make_tabs = function(line, tab, theme)
 	else
 		ret = {
 			line.sep(lsep, hl, theme.fill),
-			selected.n,
+			-- selected.n,
 			tab.number(),
 			line.sep(rsep, hl, theme.fill),
 			hl = hl,
@@ -57,19 +101,9 @@ return {
 					line.sep(sep.r.up, theme.head, theme.fill),
 				},
 				line.tabs().foreach(function(tab)
-					return make_tabs(line, tab, theme)
+					return make_tab(line, tab, theme)
 				end),
 				line.spacer(),
-				line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
-					return {
-						line.sep(sep.l.up, theme.win, theme.fill),
-						win.is_current() and '' or '',
-						win.buf_name(),
-						line.sep(sep.r.lo, theme.win, theme.fill),
-						hl = theme.win,
-						margin = ' ',
-					}
-				end),
 				{
 					line.sep(sep.l.up, theme.tail, theme.fill),
 					{ '  ', hl = theme.tail },
@@ -92,6 +126,17 @@ return {
 					return no_ext .. " " .. icon
         end,
       },
+      buf_name = {
+      	name_fallback = function(bufid) return "fallback name" end,
+      	override = function(bufid)
+					local bufname = vim.api.nvim_buf_get_name(bufid)
+					local ext = bufname:match("%.([%w]+)$") or "" -- get extension
+					local fname = bufname:match("([^/]+)$") or bufname
+					local no_ext = (ext ~= "" and fname:gsub("%.%w+$", "")) or fname
+					if no_ext ~= '' then no_ext = no_ext .. ' ' end
+					return no_ext
+      	end
+			}
 		}, -- setup modules' option,
 	})
 }

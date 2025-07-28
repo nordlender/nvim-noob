@@ -28,21 +28,36 @@ local make_win = function(win, i, count, hl, lsep, rsep)
 	return ret
 end
 
-local make_win_nodes = function(wins, line, theme)
+local make_win_nodes = function(wins, line, hl_tab)
 	local after_current = false
+	local hl = hl_tab
 	local nodes = wins.foreach(function(win, i, count)
-		local hl = theme.win
-		local lsep = (i == 1) and sep.r.lo or ''
-		local rsep = (i == count) and sep.l.up or ''
-		if after_current == true then
-			lsep = sep.r.lo
-			after_current = false
-		end
-		if win.is_current() then
-			hl = theme.current_tab
-			rsep = (i == count) and lsep or rsep
-			lsep = (i == 1) and '' or line.sep(sep.l.up, hl, theme.win)
-			after_current = true
+		local sep_line = ''
+		local lsep = sep_line
+		local rsep = ''
+
+		if count > 1 then
+			hl = vim.api.nvim_win_get_var(win.id, "wst_color")
+			if win.is_current() then
+				after_current = true
+				lsep = line.sep(sep.l.up, hl, hl .. "txt")
+				if i == 1 then
+					lsep = line.sep(sep_line, hl .. "txt", hl)
+				elseif i == count then
+					rsep = line.sep(sep_line, hl .. "txt", hl)
+				end
+				hl = vim.api.nvim_get_hl(0, { name = hl })
+				hl = { fg = hl.fg, bg = hl.bg, style = "bold" }
+			else
+				hl = hl .. "txt"
+				if i == 1 or after_current then
+					lsep = line.sep(sep.r.lo, hl_tab, hl_tab .. "txt")
+				end
+				if i == count then
+					rsep = line.sep(sep.l.up, hl_tab, hl_tab .. "txt")
+				end
+				after_current = false
+			end
 		end
 		return make_win(win, i, count, hl, lsep, rsep)
 	end)
@@ -59,12 +74,12 @@ local make_tab = function(line, tab, theme)
 	local hl = theme.tab
 
 	if n == current_n then
-		hl = theme.current_tab
+		hl = vim.api.nvim_win_get_var(tab.current_win().id, "wst_color")
 		ret = {
 			line.sep(lsep, hl, theme.fill),
 			-- selected.y,
 			tab.number(),
-			make_win_nodes(tab.wins().filter(not_float), line, theme),
+			make_win_nodes(tab.wins().filter(not_float), line, hl),
 			line.sep(rsep, hl, theme.fill),
 			hl = hl,
 			margin = ' ',

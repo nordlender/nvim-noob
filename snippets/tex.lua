@@ -13,7 +13,7 @@ local function ismath()
 	return vim.api.nvim_eval "vimtex#syntax#in_mathzone()" == 1
 end
 
-local function no_ismath()
+local function not_ismath()
 	return vim.api.nvim_eval "vimtex#syntax#in_mathzone()" == 0
 end
 
@@ -40,10 +40,10 @@ local snippets = {
 }
 
 local autosnippets = {
-	s({ trig = "ctp", name = "parencite", condition = no_ismath, priority = 10 }, {
+	s({ trig = " ctp", name = "parencite", condition = not_ismath, priority = 10 }, {
 		t("\\parencite{"), i(1), t("}")
 	}),
-	s({ trig = "ctt", name = "parencite", condition = no_ismath, priority = 10 }, {
+	s({ trig = " ctt", name = "parencite", condition = not_ismath, priority = 10 }, {
 		t("\\textcite{"), i(1), t("}")
 	}),
 	s({ trig = "bf", name = "mathbf", condition = ismath, priority = 10 }, {
@@ -52,6 +52,12 @@ local autosnippets = {
 	s({ trig = "ptl", name = "partial", condition = ismath, priority = 10 }, {
 		t("\\partial ")
 	}),
+	s({ trig = "\\sec", name = "section" }, {
+		t("\\section{"), i(1), t("}\n")
+	}),
+	s({ trig = "\\subse", name = "subsection" }, {
+		t("\\subsection{"), i(1), t("}\n")
+	})
 }
 
 return snippets, autosnippets

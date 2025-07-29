@@ -2,7 +2,6 @@
 --   
 local api = require("tabby.module.api")
 local sep = require("user.icons").separator.triangle
-local selected = require("user.icons").selected.diamond_slim
 
 local not_float = function(win)
 	return api.is_not_float_win(win.id)

@@ -9,15 +9,17 @@ local not_float = function(win)
 end
 
 
-local make_win = function(win, i, count, hl, lsep, rsep)
-	local ret = {
-		win.buf_name(),
-		win.file_icon()
+local make_win_node = function(win, i, count, hl, lsep, rsep)
+	local is_changed = win.buf().is_changed() and ' ' or ''
+	local node = {
+		is_changed, win.buf_name(), win.file_icon()
 	}
+
 	if count > 1 then
-		ret = {
+		node = {
 			lsep,
 			' ',
+			is_changed,
 			win.buf_name(),
 			win.file_icon(),
 			' ',
@@ -25,7 +27,7 @@ local make_win = function(win, i, count, hl, lsep, rsep)
 			hl = hl,
 		}
 	end
-	return ret
+	return node
 end
 
 local make_win_nodes = function(wins, line, hl_tab)
@@ -38,6 +40,7 @@ local make_win_nodes = function(wins, line, hl_tab)
 
 		if count > 1 then
 			hl = vim.api.nvim_win_get_var(win.id, "wst_color")
+
 			if win.is_current() then
 				after_current = true
 				lsep = line.sep(sep.l.up, hl, hl .. "txt")
@@ -46,6 +49,7 @@ local make_win_nodes = function(wins, line, hl_tab)
 				elseif i == count then
 					rsep = line.sep(sep_line, hl .. "txt", hl)
 				end
+
 				hl = vim.api.nvim_get_hl(0, { name = hl })
 				hl = { fg = hl.fg, bg = hl.bg, style = "bold" }
 			else
@@ -59,7 +63,8 @@ local make_win_nodes = function(wins, line, hl_tab)
 				after_current = false
 			end
 		end
-		return make_win(win, i, count, hl, lsep, rsep)
+
+		return make_win_node(win, i, count, hl, lsep, rsep)
 	end)
 	return nodes
 end

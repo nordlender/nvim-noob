@@ -7,6 +7,22 @@ M.language = function(filename, extension)
 	return icon, color
 end
 
+M.map = {
+	num_to_word = {
+		[0] = "zero",
+		[1] = "one",
+		[2] = "two",
+		[3] = "three",
+		[4] = "four",
+		[5] = "five",
+		[6] = "six",
+		[7] = "seven",
+		[8] = "eight",
+		[9] = "nine",
+		[10] = "ten"
+	},
+}
+
 M.file = {
   default = "󰈚",
   symlink = "",
@@ -43,16 +59,93 @@ M.indent_markers = {
   none = " ",
 }
 --    󰲠 󰲢 󰲤 󰲦 󰲨 󰲪 󰲬 󰲮 󰲰 󰿬 󰲲 󰎤
-M.selected = {
-	diamond_slim = {
+M.diamond = {
+	slim = {
 		y = "󰣏",
 		n = "󱀝",
 	},
-	diamond_wide = {
+	wide = {
 		y = "",
 		n = "",
 	},
 }
+
+M.numeric = {
+	standard = {
+    one   = "󰬺",
+    two   = "󰬻",
+    three = "󰬼",
+    four  = "󰬽",
+    five  = "󰬾",
+    six   = "󰬿",
+    seven = "󰭀",
+    eight = "󰭁",
+    nine  = "󰭂",
+    ten   = "󰿩",
+    nine_plus = "󰿮",
+    plus_one = "󱗋",
+    minus_one = "󱁒"
+	},
+	circle = {
+		filled = {
+			one   = "󰲠",
+			two   = "󰲢",
+			three = "󰲤",
+			four  = "󰲦",
+			five  = "󰲨",
+			six   = "󰲪",
+			seven = "󰲬",
+			eight = "󰲮",
+			nine  = "󰲰",
+			ten   = "󰿬",
+			nine_plus = "󰲲",
+		},
+		outline = {
+			one   = "󰲡",
+			two   = "󰲣",
+			three = "󰲥",
+			four  = "󰲧",
+			five  = "󰲩",
+			six   = "󰲫",
+			seven = "󰲭",
+			eight = "󰲯",
+			nine  = "󰲱",
+			ten   = "󰿭",
+			nine_plus = "󰲳",
+		}
+	},
+	box = {
+		filled = {
+			zero  = "󰎡",
+			one   = "󰎤",
+			two   = "󰎧",
+			three = "󰎪",
+			four  = "󰎭",
+			five  = "󰎱",
+			six   = "󰎳",
+			seven = "󰎶",
+			eight = "󰎹",
+			nine  = "󰎼",
+			ten   = "󰽽",
+			nine_plus = "󰎿",
+		},
+		outline = {
+			zero  = "󰎣",
+			one   = "󰎦",
+			two   = "󰎩",
+			three = "󰎬",
+			four  = "󰎮",
+			five  = "󰎰",
+			six   = "󰎵",
+			seven = "󰎸",
+			eight = "󰎻",
+			nine  = "󰎾",
+			ten   = "󰽾",
+			nine_plus = "󰏁",
+		}
+	}
+}
+
 --      
 M.separator = {
 	arrow = {
@@ -67,6 +160,7 @@ M.separator = {
 		l = "",
 		r = "",
 	},
+	-- This will always be confusing...
 	triangle = {
 		l = {
 			up = "",
